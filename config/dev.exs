@@ -2,12 +2,30 @@ import Config
 
 # Configure your database
 config :conduit, Conduit.Repo,
+  adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "conduit_dev",
+  database: "conduit_readstore_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+config :conduit, Conduit.EventStore,
+  column_data_type: "jsonb",
+  serializer: EventStore.JsonbSerializer,
+  types: EventStore.PostgresTypes,
+  database: "conduit_eventstore_dev",
+  schema: "public"
+
+# Configure the event store database
+# https://github.com/commanded/eventstore/blob/master/guides/Getting%20Started.md#using-the-jsonb-data-type
+config :eventstore, EventStore.Storage,
+  serializer: Commanded.Serialization.JsonSerializer,
+  username: "postgres",
+  password: "postgres",
+  database: "conduit_eventstore_dev",
+  hostname: "localhost",
   pool_size: 10
 
 # For development, we disable any cache and enable

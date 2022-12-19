@@ -6,11 +6,22 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :conduit, Conduit.Repo,
+  adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "conduit_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "conduit_readstore_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: 10
+
+# Configure the event store database
+# https://github.com/commanded/eventstore/blob/master/guides/Getting%20Started.md#using-the-jsonb-data-type
+config :eventstore, EventStore.Storage,
+  serializer: Commanded.Serialization.JsonSerializer,
+  username: "postgres",
+  password: "postgres",
+  database: "conduit_eventstore_test",
+  hostname: "localhost",
   pool_size: 10
 
 # We don't run a server during test. If one is required,
