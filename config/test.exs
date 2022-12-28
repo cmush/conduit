@@ -14,6 +14,13 @@ config :conduit, Conduit.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
+config :conduit, Conduit.EventStore,
+  column_data_type: "jsonb",
+  serializer: EventStore.JsonbSerializer,
+  types: EventStore.PostgresTypes,
+  database: "conduit_eventstore_test",
+  schema: "public"
+
 # Configure the event store database
 # https://github.com/commanded/eventstore/blob/master/guides/Getting%20Started.md#using-the-jsonb-data-type
 config :eventstore, EventStore.Storage,

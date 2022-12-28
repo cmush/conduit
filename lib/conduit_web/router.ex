@@ -20,10 +20,11 @@ defmodule ConduitWeb.Router do
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ConduitWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ConduitWeb do
+    pipe_through :api
+
+    post "/users", UserController, :create
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:conduit, :dev_routes) do

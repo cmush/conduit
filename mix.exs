@@ -52,7 +52,8 @@ defmodule Conduit.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:commanded, "~> 1.4"},
-      {:commanded_eventstore_adapter, "~> 1.4"}
+      {:commanded_eventstore_adapter, "~> 1.4"},
+      {:ex_machina, "~> 2.7", only: :test}
     ]
   end
 
