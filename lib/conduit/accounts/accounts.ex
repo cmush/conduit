@@ -3,8 +3,8 @@ defmodule Conduit.Accounts do
   The boundary for the Accounts system.
   """
 
-  alias Conduit.Accounts.Commands.RegisterUser
-  alias Conduit.{Router, Repo}
+  alias Conduit.Accounts.{Commands.RegisterUser, Projections.User}
+  alias Conduit.{App, Repo}
 
   @doc """
   Register a new user.
@@ -17,7 +17,8 @@ defmodule Conduit.Accounts do
       |> assign(:user_uuid, uuid)
       |> RegisterUser.new()
 
-    with :ok <- Router.dispatch(register_user, consistency: :strong) do
+    # with :ok <- Router.dispatch(register_user, application: Conduit.App, consistency: :strong) do
+    with :ok <- App.dispatch(register_user, consistency: :strong) do
       get(User, uuid)
     else
       reply -> reply
