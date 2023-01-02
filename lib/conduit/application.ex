@@ -17,9 +17,10 @@ defmodule Conduit.Application do
       # Start Finch
       {Finch, name: Conduit.Finch},
       # Start the Endpoint (http/https)
-      ConduitWeb.Endpoint
+      ConduitWeb.Endpoint,
       # Start a worker by calling: Conduit.Worker.start_link(arg)
-      # {Conduit.Worker, arg}
+      # {Conduit.Worker, arg},
+      Conduit.App
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
