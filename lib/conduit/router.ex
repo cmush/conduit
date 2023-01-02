@@ -3,6 +3,6 @@ defmodule Conduit.Router do
 
   alias Conduit.Accounts.{Aggregates.User, Commands.RegisterUser}
 
-  identify(User, by: :user_uuid)
-  dispatch([RegisterUser], to: User)
+  # identify(User, by: :user_uuid)
+  dispatch([RegisterUser], to: User, identity: :user_uuid)
 end
