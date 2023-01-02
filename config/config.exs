@@ -23,6 +23,8 @@ config :commanded,
 
 config :conduit, event_stores: [Conduit.EventStore]
 
+config :commanded_ecto_projections, repo: Conduit.Repo
+
 # Configures the endpoint
 config :conduit, ConduitWeb.Endpoint,
   url: [host: "localhost"],

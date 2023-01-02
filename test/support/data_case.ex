@@ -23,12 +23,23 @@ defmodule Conduit.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Conduit.Factory
+      import Commanded.Assertions.EventAssertions
       import Conduit.DataCase
     end
   end
 
   setup tags do
     Conduit.DataCase.setup_sandbox(tags)
+
+    {:ok, _} = Application.ensure_all_started(:conduit)
+
+    on_exit(fn ->
+      :ok = Application.stop(:conduit)
+
+      Conduit.Storage.reset!()
+    end)
+
     :ok
   end
 
