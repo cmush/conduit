@@ -55,7 +55,8 @@ defmodule Conduit.MixProject do
       {:commanded_eventstore_adapter, "~> 1.4"},
       {:ex_machina, "~> 2.7", only: :test},
       {:exconstructor, "~> 1.2"},
-      {:poison, "~> 5.0"}
+      {:poison, "~> 5.0"},
+      {:uuid, "~> 1.1"}
     ]
   end
 
