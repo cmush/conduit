@@ -10,6 +10,7 @@ import Config
 config :conduit,
   ecto_repos: [Conduit.Repo]
 
+# configure commanded
 config :conduit, Conduit.App,
   event_store: [
     adapter: Commanded.EventStore.Adapters.EventStore,
@@ -22,6 +23,8 @@ config :commanded,
   event_store_adapter: Commanded.EventStore.Adapters.EventStore
 
 config :conduit, event_stores: [Conduit.EventStore]
+
+config :commanded_ecto_projections, repo: Conduit.Repo
 
 # Configures the endpoint
 config :conduit, ConduitWeb.Endpoint,
