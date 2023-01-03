@@ -1,35 +1,38 @@
 defmodule Conduit.Storage do
   @doc """
-  Clear the event store and read store databases
+  Reset the event store and read store databases.
   """
   def reset! do
-    reset_eventstore()
-    reset_readstore()
+    :ok = Application.stop(:conduit)
+
+    reset_eventstore!()
+    # reset_readstore!()
+
+    {:ok, _} = Application.ensure_all_started(:conduit)
   end
 
-  defp reset_eventstore do
-    config = Conduit.EventStore.config()
+  defp reset_eventstore! do
+    {:ok, conn} =
+      Conduit.EventStore.config()
+      |> EventStore.Config.default_postgrex_opts()
+      |> Postgrex.start_link()
 
-    {:ok, conn} = Postgrex.start_link(config)
-
-    EventStore.Storage.Initializer.reset!(conn, config)
+    EventStore.Storage.Initializer.reset!(conn, Conduit.EventStore.config())
   end
 
-  defp reset_readstore do
-    config = Application.get_env(:conduit, MyApp.Repo)
+  # defp reset_readstore! do
+  #   {:ok, conn} = Postgrex.start_link(Conduit.Repo.config())
 
-    {:ok, conn} = Postgrex.start_link(config)
+  #   Postgrex.query!(conn, truncate_readstore_tables(), [])
+  # end
 
-    Postgrex.query!(conn, truncate_readstore_tables(), [])
-  end
-
-  defp truncate_readstore_tables do
-    """
-    TRUNCATE TABLE
-      accounts_users,
-      projection_versions
-    RESTART IDENTITY
-    CASCADE;
-    """
-  end
+  # defp truncate_readstore_tables do
+  #   """
+  #   TRUNCATE TABLE
+  #     accounts_users,
+  #     projection_versions
+  #   RESTART IDENTITY
+  #   CASCADE;
+  #   """
+  # end
 end

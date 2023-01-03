@@ -30,13 +30,7 @@ defmodule Conduit.DataCase do
   end
 
   setup tags do
-    {:ok, _} = Application.ensure_all_started(:conduit)
-
-    on_exit(fn ->
-      :ok = Application.stop(:conduit)
-
-      Conduit.Storage.reset!()
-    end)
+    Conduit.Storage.reset!()
 
     Conduit.DataCase.setup_sandbox(tags)
     :ok
