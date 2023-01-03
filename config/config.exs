@@ -26,6 +26,12 @@ config :conduit, event_stores: [Conduit.EventStore]
 
 config :commanded_ecto_projections, repo: Conduit.Repo
 
+config :vex,
+  sources: [
+    Conduit.Support.Validators,
+    Vex.Validators
+  ]
+
 # Configures the endpoint
 config :conduit, ConduitWeb.Endpoint,
   url: [host: "localhost"],
