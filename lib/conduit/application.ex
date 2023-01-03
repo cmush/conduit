@@ -21,7 +21,8 @@ defmodule Conduit.Application do
       # Start a worker by calling: Conduit.Worker.start_link(arg)
       # {Conduit.Worker, arg},
       Conduit.App,
-      Conduit.Accounts.Supervisor
+      Conduit.Accounts.Supervisor,
+      Conduit.Support.Unique
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
