@@ -3,7 +3,9 @@ defmodule Conduit.Accounts.Aggregates.User do
     :uuid,
     :username,
     :email,
-    :hashed_password
+    :hashed_password,
+    :image,
+    :bio
   ]
 
   alias Conduit.Accounts.{
@@ -20,7 +22,9 @@ defmodule Conduit.Accounts.Aggregates.User do
       user_uuid: register.user_uuid,
       username: register.username,
       email: register.email,
-      hashed_password: register.hashed_password
+      hashed_password: register.hashed_password,
+      image: register.image,
+      bio: register.bio
     }
   end
 
@@ -32,7 +36,9 @@ defmodule Conduit.Accounts.Aggregates.User do
       | uuid: registered.user_uuid,
         username: registered.username,
         email: registered.email,
-        hashed_password: registered.hashed_password
+        hashed_password: registered.hashed_password,
+        image: registered.image,
+        bio: registered.bio
     }
   end
 end

@@ -5,7 +5,7 @@ defmodule Conduit.AggregateCase do
 
   use ExUnit.CaseTemplate
 
-  using [aggregate: aggregate] do
+  using aggregate: aggregate do
     quote bind_quoted: [aggregate: aggregate] do
       @aggregate_module aggregate
 
@@ -19,11 +19,12 @@ defmodule Conduit.AggregateCase do
 
       # execute one or more commands against the aggregate
       defp execute(commands) do
-        {_, events} = Enum.reduce(commands, {%@aggregate_module{}, []}, fn (command, {aggregate, _}) ->
-          events = @aggregate_module.execute(aggregate, command)
+        {_, events} =
+          Enum.reduce(commands, {%@aggregate_module{}, []}, fn command, {aggregate, _} ->
+            events = @aggregate_module.execute(aggregate, command)
 
-          {evolve(aggregate, events), events}
-        end)
+            {evolve(aggregate, events), events}
+          end)
 
         List.wrap(events)
       end

@@ -17,8 +17,8 @@ defmodule Conduit.Accounts.Projectors.User do
         username: registered.username,
         email: registered.email,
         hashed_password: registered.hashed_password,
-        bio: nil,
-        image: nil
+        bio: registered.bio,
+        image: registered.image
       })
     end
   )

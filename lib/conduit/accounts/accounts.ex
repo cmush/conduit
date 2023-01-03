@@ -32,7 +32,6 @@ defmodule Conduit.Accounts do
     end
   end
 
-  # generate a unique identity
   defp assign(attrs, key, value), do: Map.put(attrs, key, value)
   # @moduledoc """
   # The Accounts context.
