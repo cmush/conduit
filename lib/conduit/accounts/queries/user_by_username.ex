@@ -5,6 +5,6 @@ defmodule Conduit.Accounts.Queries.UserByUsername do
 
   def new(username) do
     from u in User,
-    where: u.username == ^username
+      where: u.username == ^username
   end
 end

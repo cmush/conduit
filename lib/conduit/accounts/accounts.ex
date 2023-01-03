@@ -29,8 +29,9 @@ defmodule Conduit.Accounts do
 
     register_user =
       attrs
-      |> assign(:user_uuid, uuid)
       |> RegisterUser.new()
+      |> RegisterUser.assign_uuid(uuid)
+      |> RegisterUser.downcase_username()
 
     # with :ok <- Router.dispatch(register_user, application: Conduit.App, consistency: :strong) do
     with :ok <- App.dispatch(register_user, consistency: :strong) do
@@ -47,7 +48,6 @@ defmodule Conduit.Accounts do
     end
   end
 
-  defp assign(attrs, key, value), do: Map.put(attrs, key, value)
   # @moduledoc """
   # The Accounts context.
   # """

@@ -18,7 +18,7 @@ defmodule Conduit.Support.Middleware.Validate do
     errors = command |> Vex.errors() |> merge_errors()
 
     pipeline
-    |> respond({:error, :validation_failures, errors})
+    |> respond({:error, :validation_failure, errors})
     |> halt
   end
 

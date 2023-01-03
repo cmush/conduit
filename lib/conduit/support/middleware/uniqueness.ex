@@ -23,7 +23,7 @@ defmodule Conduit.Support.Middleware.Uniqueness do
 
       {:error, errors} ->
         pipeline
-        |> respond({:error, :validation_failures, errors})
+        |> respond({:error, :validation_failure, errors})
         |> halt()
     end
   end

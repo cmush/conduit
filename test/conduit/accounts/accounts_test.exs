@@ -27,7 +27,7 @@ defmodule Conduit.AccountsTest do
 
     @tag :integration
     test "should fail with invalid data and return error" do
-      assert {:error, :validation_failures, errors} =
+      assert {:error, :validation_failure, errors} =
                Accounts.register_user(build(:user, username: ""))
 
       assert errors == %{username: ["can't be empty"]}
@@ -38,7 +38,7 @@ defmodule Conduit.AccountsTest do
       user = build(:user)
 
       assert {:ok, %User{}} = Accounts.register_user(user)
-      assert {:error, :validation_failures, errors} = Accounts.register_user(user)
+      assert {:error, :validation_failure, errors} = Accounts.register_user(user)
 
       assert errors == %{username: ["has already been taken"]}
     end
@@ -48,6 +48,21 @@ defmodule Conduit.AccountsTest do
       1..2
       |> Enum.map(fn _ -> Task.async(fn -> Accounts.register_user(build(:user)) end) end)
       |> Enum.map(&Task.await/1)
+    end
+
+    @tag :integration
+    test "should fail when username format is invalid and return error" do
+      assert {:error, :validation_failure, errors} =
+               Accounts.register_user(build(:user, username: "j@ke"))
+
+      assert errors == %{username: ["is invalid"]}
+    end
+
+    @tag :integration
+    test "should convert username to lowercase" do
+      assert {:ok, %User{} = user} = Accounts.register_user(build(:user, username: "JAKE"))
+
+      assert user.username == "jake"
     end
   end
 
