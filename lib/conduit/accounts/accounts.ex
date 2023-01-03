@@ -3,8 +3,23 @@ defmodule Conduit.Accounts do
   The boundary for the Accounts system.
   """
 
-  alias Conduit.Accounts.{Commands.RegisterUser, Projections.User}
+  alias Conduit.Accounts.{
+    Commands.RegisterUser,
+    Projections.User,
+    Queries.UserByUsername
+  }
+
   alias Conduit.{App, Repo}
+
+  @doc """
+  Get an existing user by their username, or return `nil` if not registered
+  """
+  def user_by_username(username) do
+    username
+    |> String.downcase()
+    |> UserByUsername.new()
+    |> Repo.one()
+  end
 
   @doc """
   Register a new user.
