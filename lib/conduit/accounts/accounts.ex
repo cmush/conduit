@@ -5,8 +5,12 @@ defmodule Conduit.Accounts do
 
   alias Conduit.Accounts.{
     Commands.RegisterUser,
-    Projections.User,
-    Queries.UserByUsername
+    Projections.User
+  }
+
+  alias Conduit.Accounts.Queries.{
+    UserByUsername,
+    UserByEmail
   }
 
   alias Conduit.{App, Repo}
@@ -18,6 +22,18 @@ defmodule Conduit.Accounts do
     username
     |> String.downcase()
     |> UserByUsername.new()
+    |> Repo.one()
+  end
+
+  alias Conduit.{App, Repo}
+
+  @doc """
+  Get an existing user by their email, or return `nil` if not registered
+  """
+  def user_by_email(email) do
+    email
+    |> String.downcase()
+    |> UserByEmail.new()
     |> Repo.one()
   end
 

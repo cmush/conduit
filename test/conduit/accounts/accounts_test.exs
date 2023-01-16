@@ -66,6 +66,23 @@ defmodule Conduit.AccountsTest do
     end
   end
 
+  describe "get a user by" do
+    setup do
+      {:ok, user} = Accounts.register_user(build(:user))
+      %{user: user}
+    end
+
+    @tag :unit
+    test "user by username", %{user: %User{username: username}} do
+      assert %User{username: ^username} = Accounts.user_by_username(username)
+    end
+
+    @tag :unit
+    test "user by email", %{user: %User{email: email}} do
+      assert %User{email: ^email} = Accounts.user_by_email(email)
+    end
+  end
+
   # use Conduit.DataCase
 
   # alias Conduit.Accounts
