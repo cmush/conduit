@@ -1,26 +1,24 @@
 defmodule ConduitWeb.UserJSON do
-  alias Conduit.Accounts.User
+  alias Conduit.Accounts.Projections.User
 
   @doc """
   Renders a list of users.
   """
   def index(%{users: users}) do
-    %{data: for(user <- users, do: data(user))}
+    %{user: for(user <- users, do: user(user))}
   end
 
   @doc """
   Renders a single user.
   """
   def show(%{user: user}) do
-    %{data: data(user)}
+    %{user: user(user)}
   end
 
-  defp data(%User{} = user) do
+  defp user(%User{} = user) do
     %{
-      id: user.id,
       username: user.username,
       email: user.email,
-      hashed_password: user.hashed_password,
       bio: user.bio,
       image: user.image
     }

@@ -6,7 +6,7 @@ defmodule ConduitWeb.UserControllerTest do
   alias Conduit.Accounts
 
   def fixture(:user, attrs \\ %{}) do
-    build(:user, attrs) |> Accounts.create_user()
+    build(:user, attrs) |> Accounts.register_user()
   end
 
   setup %{conn: conn} do
@@ -20,9 +20,9 @@ defmodule ConduitWeb.UserControllerTest do
       json = json_response(conn, 201)["user"]
 
       assert json == %{
-               "bio" => nil,
+               "bio" => "I like to skateboard",
                "email" => "jake@jake.jake",
-               "image" => nil,
+               "image" => "https://i.stack.imgur.com/xHWG8.jpg",
                "username" => "jake"
              }
     end
@@ -41,10 +41,14 @@ defmodule ConduitWeb.UserControllerTest do
     @tag :web
     test "should not create user and render errors when username has been taken", %{conn: conn} do
       # register a user
-      {:ok, _user} = fixture(:user)
+      user_attrs = %{email: "jake2@jake.jake", username: "jake2"}
+
+      build(:user, user_attrs)
+      |> Accounts.register_user()
 
       # attempt to register the same username
-      conn = post(conn, ~p"/api/users", user: build(:user, email: "jake2@jake.jake"))
+      conn =
+        post(conn, ~p"/api/users", user: build(:user, %{user_attrs | email: "jake3@jake.jake"}))
 
       assert json_response(conn, 422)["errors"] == %{
                "username" => [
