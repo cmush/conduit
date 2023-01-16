@@ -48,6 +48,7 @@ defmodule Conduit.Accounts do
       |> RegisterUser.new()
       |> RegisterUser.assign_uuid(uuid)
       |> RegisterUser.downcase_username()
+      |> RegisterUser.downcase_email()
 
     # with :ok <- Router.dispatch(register_user, application: Conduit.App, consistency: :strong) do
     with :ok <- App.dispatch(register_user, consistency: :strong) do
