@@ -59,7 +59,9 @@ defmodule Conduit.MixProject do
       {:uuid, "~> 1.1"},
       {:mix_test_watch, "~> 1.1", only: :dev, runtime: false},
       {:commanded_ecto_projections, "~> 1.3"},
-      {:vex, "~> 0.9.0"}
+      {:vex, "~> 0.9.0"},
+      {:comeonin, "~> 5.3"},
+      {:bcrypt_elixir, "~> 3.0"}
     ]
   end
 
